@@ -7,7 +7,13 @@ function(e) {
     layui.form;
     i.render({
         elem: "#LAY-user-manage",
+        contentType:"application/json",
+        method:"post",
         url: layui.setter.baseUrl + "UserAdmin/list",
+        request: {
+            pageName: 'pageNo' //页码的参数名称，默认：page
+            ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+          },
         cols: [[{
             type: "checkbox",
             fixed: "left"
@@ -19,35 +25,41 @@ function(e) {
             sort: !0
         },
         {
-            field: "username",
-            title: "用户名",
+            field: "name",
+            title: "姓名",
             minWidth: 100
         },
         {
-            field: "avatar",
+            field: "nickname",
+            title: "昵称"
+        },
+        {
+            field: "avatarurl",
             title: "头像",
             width: 100,
             templet: "#imgTpl"
         },
         {
-            field: "phone",
+            field: "mobile",
             title: "手机"
         },
+        
         {
-            field: "email",
-            title: "邮箱"
-        },
-        {
-            field: "sex",
+            field: "gender",
             width: 80,
             title: "性别"
         },
         {
-            field: "ip",
-            title: "IP"
+            field: "age",
+            width: 80,
+            title: "年龄"
         },
         {
-            field: "jointime",
+            field: "grade",
+            title: "等级"
+        },
+        {
+            field: "create_date",
             title: "加入时间",
             sort: !0
         },
@@ -61,7 +73,20 @@ function(e) {
         page: !0,
         limit: 30,
         height: "full-220",
-        text: "对不起，加载出现异常！"
+        text: "对不起，加载出现异常！",
+        //一定要配置
+        response:{
+            statusName:'code', //规定返回的状态码字段为code
+            statusCode:200 //规定成功的状态码味200
+        },
+        parseData:function(res){ //res 即为原始返回的数据
+            return {
+              "code": res.code, //解析接口状态
+              "msg": res.message, //解析提示文本
+              "count": res.body.count, //解析数据长度
+              "data": res.body.rows //解析数据列表
+            };
+          }
     }),
     i.on("tool(LAY-user-manage)",
     function(e) {
