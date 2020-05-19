@@ -34,12 +34,6 @@ function(e) {
             title: "昵称"
         },
         {
-            field: "avatarurl",
-            title: "头像",
-            width: 100,
-            templet: "#imgTpl"
-        },
-        {
             field: "mobile",
             title: "手机"
         },
@@ -59,7 +53,7 @@ function(e) {
             title: "等级"
         },
         {
-            field: "create_date",
+            field: "createdate",
             title: "加入时间",
             sort: !0
         },
@@ -90,7 +84,7 @@ function(e) {
     }),
     i.on("tool(LAY-user-manage)",
     function(e) {
-        e.data;
+        var data = e.data;
         if ("del" === e.event) layer.prompt({
             formType: 1,
             title: "敏感操作，请验证口令"
@@ -103,28 +97,25 @@ function(e) {
                 layer.close(t)
             })
         });
-        else if ("edit" === e.event) {
+        else if ("view" === e.event) {
             t(e.tr);
             layer.open({
                 type: 2,
-                title: "编辑用户",
+                title: "查看用户",
                 content: "../../../views/user/user/userform.html",
                 maxmin: !0,
-                area: ["500px", "450px"],
-                btn: ["确定", "取消"],
-                yes: function(e, t) {
-                    var l = window["layui-layer-iframe" + e],
-                    r = "LAY-user-front-submit",
-                    n = t.find("iframe").contents().find("#" + r);
-                    l.layui.form.on("submit(" + r + ")",
-                    function(t) {
-                        t.field;
-                        i.reload("LAY-user-front-submit"),
-                        layer.close(e)
-                    }),
-                    n.trigger("click")
-                },
-                success: function(e, t) {}
+                area: ["520px", "800px"],
+                success: function(e, t) {
+                    var n = e.find("iframe").contents().find("#layuiadmin-form-useradmin").click();
+                    n.find('input').each(function(){
+                        debugger;
+                        if(data[this.name]!=null){
+                            this.value=data[this.name];
+                        }
+                    });
+                    n.find('img[name="avatarurl"]').attr("src", data.avatarurl);
+                    
+                }
             })
         }
     }),
