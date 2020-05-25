@@ -67,7 +67,9 @@ layui.define(["table", "form"],
             page: !0,
             limit: 30,
             height: "full-220",
-            text: "对不起，加载出现异常！",
+            text: { //自定义文本，此处用法--》当返回数据为空时的异常提示
+                none: '暂无数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+            },
             //一定要配置
             response: {
                 statusName: 'code', //规定返回的状态码字段为code
@@ -177,7 +179,9 @@ layui.define(["table", "form"],
                 }]],
                 page: !0,
                 limit: 30,
-                text: "对不起，加载出现异常！",
+                text: { //自定义文本，此处用法--》当返回数据为空时的异常提示
+                    none: '暂无数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+                },
                 response: {
                     statusName: 'code', //规定返回的状态码字段为code
                     statusCode: 200 //规定成功的状态码味200
@@ -192,7 +196,7 @@ layui.define(["table", "form"],
             }),
             i.on("tool(LAY-user-back-manage)",
                 function (e) {
-                    e.data;
+                    var data = e.data;
                     if ("del" === e.event) layer.prompt({
                         formType: 1,
                         title: "敏感操作，请验证口令"
@@ -208,33 +212,64 @@ layui.define(["table", "form"],
                         });
                     else if ("edit" === e.event) {
                         t(e.tr);
-                        layer.open({
-                            type: 2,
-                            title: "编辑管理员",
-                            content: "../../../views/user/administrators/adminform.html",
-                            area: ["420px", "420px"],
-                            btn: ["确定", "取消"],
-                            yes: function (e, t) {
-                                var l = window["layui-layer-iframe" + e],
-                                    r = "LAY-user-back-submit",
-                                    n = t.find("iframe").contents().find("#" + r);
-                                l.layui.form.on("submit(" + r + ")",
-                                    function (t) {
-                                        t.field;
-                                        i.reload("LAY-user-front-submit"),
-                                            layer.close(e)
-                                    }),
-                                    n.trigger("click")
+                        layui.$.ajax({
+                            //请求方式
+                            type: "GET",
+                            //请求的媒体类型
+                            contentType: "application/json;charset=UTF-8",
+                            //请求地址
+                            url: layui.setter.baseUrl + "Admin/detail?id=" + data.id,
+                            //请求成功
+                            success: function (result) {
+                                if (result.code == 200 && result.body != null) {
+                                    layer.open({
+                                        type: 2,
+                                        title: "编辑管理员",
+                                        content: "../../../views/user/administrators/adminform.html",
+                                        area: ["420px", "420px"],
+                                        btn: ["确定", "取消"],
+                                        yes: function (index,layero) {
+                                            var submit = layero.find('iframe').contents().find("#LAY-user-back-submit");// #subBtn为页面层提交按钮ID
+                                            submit.click();// 触发提交监听
+                                            // let id = ;
+                                            // let phone=;
+                                            // let role=;
+
+                                            // layui.$.ajax({
+                                            //     type: "post",
+                                            //     //请求地址
+                                            //     url: layui.setter.baseUrl + "Admin/save" ,
+                                            //     data: "{id:'" + sid + "'}",
+                                            //     dataType: "json",
+                                            //     contentType: "application/json",
+                                            //     //请求成功
+                                            //     success: function (result) {
+
+                                            //     }
+                                            // });
+                                            // layer.close(index);
+                                        },
+                                        success: function (e, t) {
+                                            var n = e.find("iframe").contents().find("#layuiadmin-form-admin").click();
+                                            n.find('input,select').each(function () {
+                                                if (result.body[this.name] != null) {
+                                                    this.value = result.body[this.name];
+                                                }
+                                            });
+                                        }
+                                    })
+
+
+                                }
                             },
-                            success: function (e, t) {
-                                var n = e.find("iframe").contents().find("#layuiadmin-form-admin").click();
-                                n.find('input').each(function () {
-                                    if (result.body.baseInfo[this.name] != null) {
-                                        this.value = result.body.baseInfo[this.name];
-                                    }
-                                });
+                            //请求失败，包含具体的错误信息
+                            error: function (e) {
+                                console.log(e.status);
+                                console.log(e.responseText);
                             }
-                        })
+                        });
+
+
                     }
                 }),
             i.render({
