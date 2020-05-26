@@ -7,7 +7,7 @@
     
  */
  
-layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
+layui.define(['laytpl', 'layer', 'element', 'util','table'], function(exports){
   exports('setter', {
     container: 'LAY_app' //容器ID
     ,baseUrl: 'https://localhost:44314/api/'
@@ -25,14 +25,15 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
 
     //自定义请求字段
     ,request: {
-      tokenName: false //自动携带 token 的字段名（如：access_token）。可设置 false 不携带。
+      tokenName: 'AdminToken' //自动携带 token 的字段名（如：access_token）。可设置 false 不携带。
     }
     
     //自定义响应字段
     ,response: {
       statusName: 'code' //数据状态的字段名称
       ,statusCode: {
-        ok: 0 //数据状态一切正常的状态码
+        success:200
+        ,ok: 0 //数据状态一切正常的状态码
         ,logout: 1001 //登录状态失效的状态码
       }
       ,msgName: 'msg' //状态信息的字段名称
@@ -109,4 +110,14 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
       ,initColorIndex: 0
     }
   });
+
+  var table=layui.table;
+  table.set({
+    headers:{
+      AdminToken:layui.data("layuiAdmin").AdminToken
+    }
+    ,where:{
+      AdminToken:layui.data("layuiAdmin").AdminToken
+    }
+  })
 });

@@ -45,11 +45,11 @@ function(e) {
             dataType: "json",
             success: function(t) {
                 var a = o.statusCode;
-                if (t[o.statusName] == a.ok)"function" == typeof e.done && e.done(t);
+                if (t[o.statusName] == a.ok||t[o.statusName] == a.success)"function" == typeof e.done && e.done(t);
                 else if (t[o.statusName] == a.logout) i.exit();
                 else {
-                    var r = ["<cite>Error：</cite> " + (t[o.msgName] || "返回状态码异常"), s()].join("");
-                    i.error(r)
+                    //var r = ["<cite>Error：</cite> " + (t[o.msgName] || "返回状态码异常"), s()].join("");
+                    i.error(t.message)
                 }
                 "function" == typeof n && n(t)
             },

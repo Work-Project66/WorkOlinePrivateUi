@@ -89,17 +89,14 @@ layui.define(["table", "form"],
                     var data = e.data;
                     if ("view" === e.event) {
                         t(e.tr);
-                        layui.$.ajax({
-                            //请求方式
-                            type: "GET",
+                        layui.admin.req({
                             //请求的媒体类型
                             contentType: "application/json;charset=UTF-8",
                             //请求地址
                             url: layui.setter.baseUrl + "UserAdmin/detail?id=" + data.id,
                             //请求成功
-                            success: function (result) {
-                                if (result.code == 200 && result.body != null) {
-
+                            done: function (result) {
+                                if (result.body != null) {
                                     layer.open({
                                         type: 2,
                                         title: "查看用户",
@@ -119,11 +116,6 @@ layui.define(["table", "form"],
 
 
                                 }
-                            },
-                            //请求失败，包含具体的错误信息
-                            error: function (e) {
-                                console.log(e.status);
-                                console.log(e.responseText);
                             }
                         });
 
@@ -212,16 +204,14 @@ layui.define(["table", "form"],
                         });
                     else if ("edit" === e.event) {
                         t(e.tr);
-                        layui.$.ajax({
-                            //请求方式
-                            type: "GET",
+                        layui.admin.req({
                             //请求的媒体类型
                             contentType: "application/json;charset=UTF-8",
                             //请求地址
                             url: layui.setter.baseUrl + "Admin/detail?id=" + data.id,
                             //请求成功
-                            success: function (result) {
-                                if (result.code == 200 && result.body != null) {
+                            done: function (result) {
+                                if (result.body != null) {
                                     layer.open({
                                         type: 2,
                                         title: "编辑管理员",
@@ -231,23 +221,6 @@ layui.define(["table", "form"],
                                         yes: function (index,layero) {
                                             var submit = layero.find('iframe').contents().find("#LAY-user-back-submit");// #subBtn为页面层提交按钮ID
                                             submit.click();// 触发提交监听
-                                            // let id = ;
-                                            // let phone=;
-                                            // let role=;
-
-                                            // layui.$.ajax({
-                                            //     type: "post",
-                                            //     //请求地址
-                                            //     url: layui.setter.baseUrl + "Admin/save" ,
-                                            //     data: "{id:'" + sid + "'}",
-                                            //     dataType: "json",
-                                            //     contentType: "application/json",
-                                            //     //请求成功
-                                            //     success: function (result) {
-
-                                            //     }
-                                            // });
-                                            // layer.close(index);
                                         },
                                         success: function (e, t) {
                                             var n = e.find("iframe").contents().find("#layuiadmin-form-admin").click();

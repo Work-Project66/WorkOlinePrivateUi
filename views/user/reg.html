@@ -18,15 +18,20 @@
   <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
     <div class="layadmin-user-login-main">
       <div class="layadmin-user-login-box layadmin-user-login-header">
-        <h2>layuiAdmin</h2>
-        <p>layui 官方出品的单页面后台管理模板系统</p>
+        <h2>WORK</h2>
+        <p>找工作后台管理模板系统</p>
       </div>
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
         <div class="layui-form-item">
-          <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="LAY-user-login-cellphone"></label>
-          <input type="text" name="cellphone" id="LAY-user-login-cellphone" lay-verify="phone" placeholder="手机" class="layui-input">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-loginname"></label>
+          <input type="text" name="loginname" id="LAY-user-login-loginname" lay-verify="loginname" placeholder="登录名" class="layui-input">
         </div>
         <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="LAY-user-login-phone"></label>
+          <input type="text" name="phone" id="LAY-user-login-phone" lay-verify="phone" placeholder="手机" class="layui-input">
+        </div>
+        
+        <!-- <div class="layui-form-item">
           <div class="layui-row">
             <div class="layui-col-xs7">
               <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
@@ -38,7 +43,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
           <input type="password" name="password" id="LAY-user-login-password" lay-verify="pass" placeholder="密码" class="layui-input">
@@ -48,8 +53,8 @@
           <input type="password" name="repass" id="LAY-user-login-repass" lay-verify="required" placeholder="确认密码" class="layui-input">
         </div>
         <div class="layui-form-item">
-          <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-nickname"></label>
-          <input type="text" name="nickname" id="LAY-user-login-nickname" lay-verify="nickname" placeholder="昵称" class="layui-input">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
+          <input type="text" name="username" id="LAY-user-login-username" lay-verify="username" placeholder="用户名" class="layui-input">
         </div>
         <div class="layui-form-item">
           <input type="checkbox" name="agreement" lay-skin="primary" title="同意用户协议" checked>
@@ -58,11 +63,6 @@
           <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-reg-submit">注 册</button>
         </div>
         <div class="layui-trans layui-form-item layadmin-user-login-other">
-          <label>社交账号注册</label>
-          <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
-          <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
-          <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-          
           <a href="login.html" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
           <a href="login.html" class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">登入</a>
         </div>
@@ -71,12 +71,7 @@
     
     <div class="layui-trans layadmin-user-login-footer">
       
-      <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
-      <p>
-        <span><a href="http://www.layui.com/admin/#get" target="_blank">获取授权</a></span>
-        <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>
-        <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>
-      </p>
+      <p>© 2020 work</p>
     </div>
 
   </div>
@@ -112,20 +107,21 @@
       
       //请求接口
       admin.req({
-        url: layui.setter.base + 'json/user/reg.js' //实际使用请改成服务端真实接口
-        ,data: field
+        url: layui.setter.baseUrl + 'Account/register' //实际使用请改成服务端真实接口
+        ,data: JSON.stringify(field)
+        ,type:'post'
+        ,contentType: "application/json"
         ,done: function(res){        
           layer.msg('注册成功', {
             offset: '15px'
             ,icon: 1
             ,time: 1000
           }, function(){
-            location.hash = '/user/login'; //跳转到登入页
+            location.href = 'login.html'; 
           });
         }
       });
       
-      return false;
     });
   });
   </script>
