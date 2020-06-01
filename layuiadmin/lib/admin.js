@@ -362,7 +362,8 @@ function(e) {
         s.ie && s.ie < 10 && n.error("IE" + s.ie + "下访问可能不佳，推荐使用：Chrome / Firefox / Edge 等高级浏览器", {
             offset: "auto",
             id: "LAY_errorIE"
-        })
+        }),
+        n.reqSetup()
     } (),
     t.on("tab(" + p + ")",
     function(e) {

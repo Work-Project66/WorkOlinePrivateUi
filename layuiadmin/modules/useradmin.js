@@ -4,16 +4,13 @@ layui.define(["table", "form"],
     function (e) {
         var t = layui.$,
             i = layui.table;
+            
         layui.form;
         i.render({
             elem: "#LAY-user-manage",
             contentType: "application/json",
             method: "post",
             url: layui.setter.baseUrl + "UserAdmin/list",
-            request: {
-                pageName: 'pageNo' //页码的参数名称，默认：page
-                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
-            },
             cols: [[{
                 type: "checkbox",
                 fixed: "left"
@@ -64,25 +61,7 @@ layui.define(["table", "form"],
                 fixed: "right",
                 toolbar: "#table-useradmin-webuser"
             }]],
-            page: !0,
-            limit: 30,
-            height: "full-220",
-            text: { //自定义文本，此处用法--》当返回数据为空时的异常提示
-                none: '暂无数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
-            },
-            //一定要配置
-            response: {
-                statusName: 'code', //规定返回的状态码字段为code
-                statusCode: 200 //规定成功的状态码味200
-            },
-            parseData: function (res) { //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.body.count, //解析数据长度
-                    "data": res.body.rows //解析数据列表
-                };
-            }
+            
         }),
             i.on("tool(LAY-user-manage)",
                 function (e) {
@@ -127,10 +106,6 @@ layui.define(["table", "form"],
                 contentType: "application/json",
                 method: "post",
                 url: layui.setter.baseUrl + "Admin/list",
-                request: {
-                    pageName: 'pageNo' //页码的参数名称，默认：page
-                    , limitName: 'pageSize' //每页数据量的参数名，默认：limit
-                },
                 cols: [[{
                     type: "checkbox",
                     fixed: "left"
@@ -169,22 +144,6 @@ layui.define(["table", "form"],
                     fixed: "right",
                     toolbar: "#table-useradmin-admin"
                 }]],
-                page: !0,
-                limit: 30,
-                text: { //自定义文本，此处用法--》当返回数据为空时的异常提示
-                    none: '暂无数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
-                },
-                response: {
-                    statusName: 'code', //规定返回的状态码字段为code
-                    statusCode: 200 //规定成功的状态码味200
-                }, parseData: function (res) { //res 即为原始返回的数据
-                    return {
-                        "code": res.code, //解析接口状态
-                        "msg": res.message, //解析提示文本
-                        "count": res.body.count, //解析数据长度
-                        "data": res.body.rows //解析数据列表
-                    };
-                }
             }),
             i.on("tool(LAY-user-back-manage)",
                 function (e) {

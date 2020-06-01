@@ -75,7 +75,7 @@
         , form = layui.form;
       form.on('submit(LAY-user-front-submit)', function (d) {
         debugger;
-        layui.$.ajax({
+        layui.admin.req({
           type: "post",
           contentType: "application/json",
           //请求地址

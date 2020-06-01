@@ -11,6 +11,8 @@ layui.define(function(e) {
                 i.exit(function() {
                     location.href = "user/login.html"
                 })
+
+                
             }
         })
     },

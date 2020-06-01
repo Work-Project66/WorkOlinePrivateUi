@@ -58,6 +58,25 @@ function(t) {
     },
     n.on("submit(setmypass)",
     function(t) {
+        //请求接口
+      a.req({
+        url: layui.setter.baseUrl + 'Admin/updatePassword' //实际使用请改成服务端真实接口
+        ,data: JSON.stringify({
+            'oldPassword':t.field.oldPassword,
+            'newPassword':t.field.password,
+        })
+        ,type:'post'
+        ,contentType: "application/json"
+        ,done: function(res){        
+          layer.msg('修改成功', {
+            offset: '15px'
+            ,icon: 1
+            ,time: 1000
+          });
+        }
+      });
+
+
         return e.msg(JSON.stringify(t.field)),
         !1
     }),
