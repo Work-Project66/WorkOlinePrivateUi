@@ -26,6 +26,10 @@ layui.define(["laytpl", "layer"],
                     key: r.request.tokenName,
                     remove: !0
                 }),
+                layui.data('loginUserInfo', {
+                    key: 'data',
+                    remove: !0
+                }),
                     e && e()
             },
             i.req = function (e) {
